@@ -19,7 +19,7 @@ public class LoginTest extends BaseTest {
     public void userSholdLoginSuccessfullyWithValidCredentials() {
         driver.findElement(By.id("username")).sendKeys("tomsmith"); //Enter username
         driver.findElement(By.id("password")).sendKeys("SuperSecretPassword!"); //Enter password
-        driver.findElement(By.xpath("//i[@class=fa fa-2x fa-sign-in]")).click(); //Click on login button
+        driver.findElement(By.xpath("//button[@type='submit']")).click(); //Click on login button
         String expectedTest = "Secure Area"; //Verify the text
         String actualTest = driver.findElement(By.xpath("//h2")).getText();
         Assert.assertEquals(actualTest, expectedTest);
@@ -29,20 +29,20 @@ public class LoginTest extends BaseTest {
     public void verifyTheUsernameErrorMessage() {
         driver.findElement(By.id("username")).sendKeys("tomsmith1"); //Enter username
         driver.findElement(By.id("password")).sendKeys("SuperSecretPassword!"); //Enter password
-        driver.findElement(By.xpath("//i[@class=fa fa-2x fa-sign-in]")).click(); //Click on login button
-        String expectedErrorMessage = "Your username is invalid"; //Verify the text
-        String actualErrorMsg = driver.findElement(By.xpath("//div[@class='flash error]")).getText();
-        Assert.assertEquals(actualErrorMsg, expectedErrorMessage);
+        driver.findElement(By.xpath("//button[@type='submit']")).click(); //Click on login button
+        String expectedErrorMessage = "Your username is invalid!\n×"; //Verify the text
+        String actualErrorMsg = driver.findElement(By.xpath("//div[@class='flash error']")).getText();
+        Assert.assertEquals("Your username is invalid!\n×", actualErrorMsg, expectedErrorMessage);
     }
 
     @Test
     public void verifyThePasswordErrorMessage() {
-        driver.findElement(By.id("username")).sendKeys("tomsmith1"); //Enter username
+        driver.findElement(By.id("username")).sendKeys("tomsmith"); //Enter username
         driver.findElement(By.id("password")).sendKeys("SuperSecretPassword"); //Enter password
-        driver.findElement(By.xpath("//i[@class=fa fa-2x fa-sign-in]")).click(); //Click on login button
-        String expectedErrorMessage = "Your password is invalid!";         //Verify the error message
+        driver.findElement(By.xpath("//button[@type='submit']")).click(); //Click on login button
+        String expectedErrorMessage = "Your password is invalid!\n×"; //Verify the error message
         String actualErrorMsg = driver.findElement(By.xpath("//div[@class='flash error']")).getText();
-        Assert.assertEquals(actualErrorMsg, expectedErrorMessage);
+        Assert.assertEquals("Your password is invalid!\n×", actualErrorMsg, expectedErrorMessage);
     }
 
     @After
